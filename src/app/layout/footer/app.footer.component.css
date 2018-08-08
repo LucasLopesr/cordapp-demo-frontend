@@ -1,0 +1,26 @@
+mat-toolbar {
+	height: 80px;
+	position: absolute;
+	bottom: 0;
+}
+
+#contact,
+#contact a:link, 
+#contact a:visited,
+#contact a:active,
+#contact a:hover {
+	color: #444444;
+}
+
+#contact {
+	font-size: 12px;
+}
+
+#contact .mat-icon {
+	vertical-align: middle;
+	color: #666666;
+}
+
+#contact .info {
+	margin-left: 15px;
+}

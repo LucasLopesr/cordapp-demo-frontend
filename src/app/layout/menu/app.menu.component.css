@@ -1,0 +1,8 @@
+button {
+	display: block;
+	color: #444444;
+}
+
+button .mat-icon {
+	color: #666666;
+}

@@ -1,0 +1,30 @@
+<div id="overview">
+
+	<mat-card>
+		<div class="title">{{ 'channelServices' | translate:{name: 'A'} }}</div>
+		<button mat-button [routerLink]="['/channel/1/insure']">
+			<mat-icon>verified_user</mat-icon> {{ "insureProducts" | translate }}
+		</button>
+		<button mat-button [routerLink]="['/channel/1/insured']">
+			<mat-icon>search</mat-icon> {{ "insuredProductsDetails" | translate }}
+		</button>
+	</mat-card>
+	
+	<mat-card>
+		<div class="title">{{ 'channelServices' | translate:{name: 'B'} }}</div>
+		<button mat-button [routerLink]="['/channel/2/insure']">
+			<mat-icon>verified_user</mat-icon> {{ "insureProducts" | translate }}
+		</button>
+		<button mat-button [routerLink]="['/channel/2/insured']">
+			<mat-icon>search</mat-icon> {{ "insuredProductsDetails" | translate }}
+		</button>
+	</mat-card>
+	
+	<mat-card>
+		<div class="title">{{ 'insurerServices' | translate }}</div>
+		<button mat-button [routerLink]="['/insurer/insured']">
+			<mat-icon>search</mat-icon> {{ "insuredProductsDetails" | translate }}
+		</button>
+	</mat-card>
+	
+</div>

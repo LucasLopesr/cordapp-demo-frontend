@@ -1,0 +1,32 @@
+
+<mat-toolbar class="mat-elevation-z2"> 
+  <mat-toolbar-row>
+  
+  	<div id="logo-corda">
+		<a href="https://www.corda.net/" rel="noopener noreferrer external" target="_blank">
+			<img src="assets/images/corda-logo.png" alt="Corda" />
+		</a> 
+	</div>
+	
+	<div id="logo-codeit">
+		<a href="http://www.codeitsolutions.com.br" rel="noopener noreferrer external" target="_blank"> 
+			<img src="assets/images/codeit-logo.png" alt="CodeIT Solutions" />
+		</a>
+	</div>
+	
+    <span class="spacer"></span>
+    
+    <span id="title">{{ getTitle() }}</span>
+    
+    <span class="spacer"></span>
+		
+	<div id="language-selection">
+		<span [class.selected]="isLanguage('pt')"><span class="flag-icon flag-icon-br" (click)="setLanguage('pt')"></span></span>
+		<span [class.selected]="isLanguage('en')"><span class="flag-icon flag-icon-us" (click)="setLanguage('en')"></span></span>
+		<span [class.selected]="isLanguage('es')"><span class="flag-icon flag-icon-es" (click)="setLanguage('es')"></span></span>
+	</div>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
