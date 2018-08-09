@@ -1,0 +1,23 @@
+#error-area {
+	padding-top: 5%;
+	text-align: center;
+	color: #f07979;
+}
+
+#error-area mat-icon {
+	vertical-align: middle;
+	font-size: 2.8em;
+	width: 48px;
+	height: 48px;
+}
+
+#error-area span {
+	vertical-align: middle;
+	font-size: 1.5em;
+}
+
+#error-area button {
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #666666;
+}

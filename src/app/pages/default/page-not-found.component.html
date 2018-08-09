@@ -1,1 +1,6 @@
-{{ 'pageNotFound' | translate }}
+<div id="error-area">
+	<mat-icon>error</mat-icon>
+	<span>{{ 'pageNotFound' | translate }}</span>
+	<br/>
+	<button mat-button (click)="goBack()">{{ 'goBack' | translate }}</button>
+</div>

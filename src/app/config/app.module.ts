@@ -16,8 +16,6 @@ import { AppFooterComponent } from '../layout/footer/app.footer.component';
 import { AppHeaderService } from '../layout/header/app.header.service';
 
 import { OverviewComponent } from '../pages/overview/overview.component';
-import { InsurerComponent } from '../pages/insurer/insurer.component';
-import { ChannelComponent } from '../pages/channel/channel.component';
 import {InsurerInsuredComponent} from '../pages/insurer/insured/insured.component';
 import {ChannelInsureComponent} from '../pages/channel/insure/insure.component';
 import {ChannelInsuredComponent} from '../pages/channel/insured/insured.component';
@@ -31,9 +29,7 @@ import {PageNotFoundComponent} from '../pages/default/page-not-found.component';
     AppMenuComponent,
     AppFooterComponent,
     OverviewComponent,
-    InsurerComponent,
     InsurerInsuredComponent,
-    ChannelComponent,
     ChannelInsureComponent,
     ChannelInsuredComponent,
     PageNotFoundComponent

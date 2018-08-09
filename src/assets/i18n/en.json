@@ -2,9 +2,11 @@
 	"views": "Views",
 	"overview": "Overview",
 	"channelServices": "Channel {{name}} Services",
+	"channel": "Channel",
 	"insurer": "Insurer",
 	"channelMicroinsurance": "Channel {{name}} - Microinsurance",
 	"insureProducts": "Insure products",
+	"insuredProducts": "Insured products",
 	"insuredProductsDetails": "Insured products details",
 	"insurance": "Insurance",
 	"microinsurance": "Microinsurance",
@@ -33,5 +35,6 @@
 	"wait": "Wait",
 	"sao_paulo": "Sao Paulo",
 	"brazil": "Brazil",
-	"pageNotFound": "Page not found!"
+	"pageNotFound": "Oops! Page not found.",
+	"goBack": "Go back"
 }

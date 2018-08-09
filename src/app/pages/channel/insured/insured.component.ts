@@ -1,3 +1,4 @@
+import { AppHeaderService } from '../../../layout/header/app.header.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -10,12 +11,13 @@ export class ChannelInsuredComponent implements OnInit {
 
   private name: string;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private header: AppHeaderService) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
         this.name = params['id'] === '1' ? 'A' : 'B';
     });
+    this.header.setTitle('channelMicroinsurance', {name: this.name});
   }
 
   getName() {

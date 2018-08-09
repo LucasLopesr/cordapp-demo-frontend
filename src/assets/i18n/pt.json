@@ -2,9 +2,11 @@
 	"views": "Visões",
 	"overview": "Visão Geral",
 	"channelServices": "Serviços do Canal {{name}}",
+	"channel": "Canal",
 	"insurer": "Seguradora",
 	"channelMicroinsurance": "Canal {{name}} - Microsseguros",
 	"insureProducts": "Segurar produtos",
+	"insuredProducts": "Produtos segurados",
 	"insuredProductsDetails": "Consultar produtos segurados",
 	"insurance": "Seguro",
 	"microinsurance": "Microsseguros",
@@ -33,5 +35,6 @@
 	"wait": "Aguarde",
 	"sao_paulo": "São Paulo",
 	"brazil": "Brasil",
-	"pageNotFound": "Página não encontrada!"
+	"pageNotFound": "Ops! Página não encontrada.",
+	"goBack": "Voltar"
 }

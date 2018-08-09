@@ -1,3 +1,4 @@
+import { AppHeaderService } from '../../../layout/header/app.header.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -8,9 +9,10 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class InsurerInsuredComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private header: AppHeaderService) {}
 
   ngOnInit() {
+    this.header.setTitle('insurer');
   }
 
 }

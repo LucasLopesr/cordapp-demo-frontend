@@ -1,20 +1,22 @@
 <mat-toolbar class="mat-elevation-z4">
-	<mat-menu #menu="matMenu">
-		<button mat-button [routerLink]="['overview']">
-			<mat-icon>assignment</mat-icon> {{ "overview" | translate }}
-		</button>
-		<button mat-button [routerLink]="['channel/1']">
-			<mat-icon>shopping_cart</mat-icon> {{ "channelServices" | translate:{name: 'A'} }}
-		</button>
-		<button mat-button [routerLink]="['channel/2']">
-			<mat-icon>shopping_cart</mat-icon> {{ "channelServices" | translate:{name: 'B'} }}
-		</button>
-		<button mat-button [routerLink]="['insurer']">
-			<mat-icon>verified_user</mat-icon> {{ "insurer" | translate }}
-		</button>
-	</mat-menu>
 	
 	<button mat-button [matMenuTriggerFor]="menu">
 		<mat-icon>dashboard</mat-icon> {{ 'views' | translate }}
 	</button>
+	
+	<mat-menu #menu>
+		<button mat-menu-item [routerLink]="['overview']">
+			<mat-icon>assignment</mat-icon> {{ "overview" | translate }}
+		</button>
+		<button mat-menu-item [routerLink]="['channel/1']">
+			<mat-icon>shopping_cart</mat-icon> {{ "channel" | translate }} A
+		</button>
+		<button mat-menu-item [routerLink]="['channel/2']">
+			<mat-icon>shopping_cart</mat-icon> {{ "channel" | translate }} B
+		</button>
+		<button mat-menu-item [routerLink]="['insurer']">
+			<mat-icon>verified_user</mat-icon> {{ "insurer" | translate }}
+		</button>
+	</mat-menu>
+	
 </mat-toolbar>

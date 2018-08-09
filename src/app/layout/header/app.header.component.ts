@@ -24,7 +24,6 @@ export class AppHeaderComponent implements OnInit {
     this.header.changeTitle.subscribe(title => {
       this.title = title;
     });
-    this.header.setTitle('microinsurance');
   }
 
   getTitle() {
