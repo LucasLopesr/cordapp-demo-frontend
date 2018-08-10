@@ -12,6 +12,6 @@ export const environment = {
   apiUrlRetailer1: urlRetailer1,
   apiUrlVarejista2: urlRetailer2,
   apiUrlInsurer: urlInsurer,
-  languages: ['en', 'es', 'pt'],
-  language: 'pt'
+  languages: ['en-US', 'pt-BR'],
+  language: 'pt-BR'
 };

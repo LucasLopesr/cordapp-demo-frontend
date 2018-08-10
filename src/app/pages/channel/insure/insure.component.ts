@@ -9,11 +9,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatTableDataSource } from '@angular/material';
 
 const data: ProductSelection[] = [
-  {product: {nku: '409', brand: 'Sony', price: 1.0079, description: 'Smart TV'}, selected: false},
-  {product: {nku: '030', brand: 'Sony', price: 4.0026, description: 'Smart TV'}, selected: false},
-  {product: {nku: '010', brand: 'Sony', price: 6.941, description: 'Smart TV'}, selected: true},
-  {product: {nku: '100', brand: 'Sony', price: 9.0122, description: 'Smart TV'}, selected: false},
-  {product: {nku: '102', brand: 'Sony', price: 10.811, description: 'Smart TV'}, selected: false}
+  {product: {nku: '409', brand: 'Sony', price: 6123.62, description: 'Smart TV 42 Polegadas Led 4K SNY7654'}, selected: false},
+  {product: {nku: '111', brand: 'Philco', price: 5123.04, description: 'Smart TV 40 Polegadas Led 4K PH89898'}, selected: false},
+  {product: {nku: '075', brand: 'LG', price: 7123.25, description: 'Smart TV 50 Polegadas Led 4K LG50231'}, selected: true},
+  {product: {nku: '053', brand: 'Samsung', price: 9123.12, description: 'Smart TV 64 Polegadas Led 4K MU6400'}, selected: false}
 ];
 
 @Component({
@@ -31,6 +30,8 @@ const data: ProductSelection[] = [
 export class ChannelInsureComponent implements OnInit {
 
   displayedColumns = ['nku', 'brand', 'price', 'description', 'selection'];
+  displayedDColumns = ['selection', 'name', 'price', 'description'];
+
   dataSource: MatTableDataSource<any>;
 
   private name: string;
@@ -44,22 +45,36 @@ export class ChannelInsureComponent implements OnInit {
       this.name = params['id'] === '1' ? 'A' : 'B';
     });
     this.header.setTitle('channelMicroinsurance', {name: this.name});
-    this.dataSource = new MatTableDataSource(this.getRows());
+    this.dataSource = new MatTableDataSource(this.createRows());
   }
 
-  getRows() {
+  createRows() {
     const rows = [];
-    data.forEach(product => rows.push(product, { detailRow: true, product }));
+    data.forEach(row => rows.push(row, {parent: row, coverages: this.createCoverages(row.product) }));
     return rows;
+  }
+
+  createCoverages(product: Product) {
+    const coverages = [];
+
+    coverages.push({selected: false, nku: product.nku, name: 'Garantia Estendida', price: 93.34,
+      description: 'Garantia adicional de 2 anos contra defeitos de fabricação'});
+
+    coverages.push({selected: true, nku: product.nku, name: 'Proteção contra Danos', price: 52.10,
+      description: 'Cobertura contra incêndio, raios e vendavais'});
+
+    return coverages;
   }
 
   getName() {
     return this.name;
   }
 
-  isExpansionDetailRow = (i: number, row: Object) => {
-    console.log(row);
-    return row.hasOwnProperty('detailRow');
+  /**
+   * Odd indexes are the coverage rows.
+   */
+  isCoverageRow = (index: number, row: Object) => {
+    return (index + 1) % 2 === 0;
   }
 
 }

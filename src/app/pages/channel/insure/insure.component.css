@@ -22,3 +22,11 @@ mat-table {
 	text-align: center;
 	flex: 0 0 60px;
 }
+
+.products-table mat-cell {
+	padding: 10px 0;
+}
+
+.coverages-table mat-cell {
+	color: #3465a4;
+}

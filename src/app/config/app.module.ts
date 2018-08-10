@@ -9,6 +9,11 @@ import { TranslationModule } from './translation.module';
 import { RoutingModule } from './routing.module';
 import { MaterialModule } from './material.module';
 
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { LocalizedCurrencyPipe } from '../data/localized-currency.pipe';
+import { LocalizedDatePipe } from '../data/localized-date.pipe';
+
 import { AppComponent } from '../app.component';
 import { AppHeaderComponent } from '../layout/header/app.header.component';
 import { AppMenuComponent } from '../layout/menu/app.menu.component';
@@ -22,8 +27,13 @@ import {ChannelInsuredComponent} from '../pages/channel/insured/insured.componen
 
 import {PageNotFoundComponent} from '../pages/default/page-not-found.component';
 
+registerLocaleData(localePt, 'pt-BR');
+
 @NgModule({
   declarations: [
+    LocalizedCurrencyPipe,
+    LocalizedDatePipe,
+
     AppComponent,
     AppHeaderComponent,
     AppMenuComponent,

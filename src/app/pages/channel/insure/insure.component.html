@@ -8,7 +8,7 @@
 	    </mat-input-container>
     </div>
     
-	<mat-table class="lessons-table mat-elevation-z2" [dataSource]="dataSource">
+	<mat-table class="products-table mat-elevation-z2" [dataSource]="dataSource">
     
 	    <ng-container matColumnDef="nku">
 	        <mat-header-cell *matHeaderCellDef>{{ 'nku' | translate }}</mat-header-cell>
@@ -27,7 +27,7 @@
 	    <ng-container matColumnDef="price">
 	        <mat-header-cell *matHeaderCellDef>{{ 'price' | translate }}</mat-header-cell>
 	        <mat-cell class="price-cell" *matCellDef="let row">
-	        	{{row.product.price}}
+	        	{{row.product.price | localizedCurrency}}
 	        </mat-cell>
 	    </ng-container>
 	
@@ -47,7 +47,39 @@
 	    
 	    <ng-container matColumnDef="expandedDetail">
 	      <mat-cell *matCellDef="let row"> 
-	        NKU: {{ row.product.product.nku }}
+
+			<mat-table class="coverages-table" [dataSource]="row.coverages">
+	
+			    <ng-container class="selection-container" matColumnDef="selection">
+			        <mat-cell class="selection-cell" *matCellDef="let coverage">
+			        	<mat-checkbox color="primary" [(ngModel)]="coverage.selected"></mat-checkbox>
+			        </mat-cell>
+			    </ng-container>
+			
+			    <ng-container class="name-container" matColumnDef="name">
+			        <mat-cell class="name-cell" *matCellDef="let coverage">
+			        	{{coverage.name}}
+			        </mat-cell>
+			    </ng-container>
+			
+			    <ng-container class="price-container" matColumnDef="price">
+			        <mat-cell class="price-cell" *matCellDef="let coverage">
+			        	{{coverage.price | localizedCurrency}}
+			        </mat-cell>
+			    </ng-container>
+			
+			    <ng-container class="description-container" matColumnDef="description">
+			        <mat-cell class="description-cell" *matCellDef="let coverage">
+			        	{{coverage.description}}
+			        </mat-cell>
+			    </ng-container>
+	    
+				<mat-row *matRowDef="let row; columns: displayedDColumns;"
+            matRipple class="product-row"></mat-row>
+			</mat-table>
+
+
+
 	      </mat-cell>
 	    </ng-container>
 
@@ -55,8 +87,8 @@
 	    <mat-row *matRowDef="let row; columns: displayedColumns;"
             matRipple class="product-row"></mat-row>
 	
-	    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
-	            [@detailExpand]="row.product.selected ? 'expanded' : 'collapsed'"
+	    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isCoverageRow"
+	            [@detailExpand]="row.parent.selected ? 'expanded' : 'collapsed'"
 	            style="overflow: hidden"> 
 	    </mat-row>
 
