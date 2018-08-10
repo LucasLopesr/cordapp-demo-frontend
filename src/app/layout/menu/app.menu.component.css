@@ -1,3 +1,7 @@
+mat-toolbar {
+	padding: 0 20px 0 40px;
+}
+
 button {
 	display: block;
 	color: #444444;
@@ -6,4 +10,23 @@ button {
 
 button .mat-icon {
 	color: #666666;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+#language-selection .flag-icon {
+	cursor: pointer;
+	width: 30px;
+	height: 20px;
+}
+
+#language-selection .selected {
+	border-bottom: 4px solid #3465a4;
+	padding-bottom: 3px;
+}
+
+#language-selection {
+	padding-right: 30px;
 }

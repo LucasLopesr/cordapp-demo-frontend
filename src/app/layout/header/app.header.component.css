@@ -1,36 +1,23 @@
+mat-toolbar {
+	padding: 0 30px 0 10px;
+}
+
 mat-toolbar-row {
 	margin: 15px;
 }
 
 #logo-corda img {
-	margin: 5px 0 0 15px;
 	width: 130px;
 }
 
 #logo-codeit img {
-	margin: 0 0 0 10px;
 	width: 170px;
 }
 
 #title {
-	margin: 5px 15% 0 10%;
+	margin-top: 5px;
 	color: #444444;
 	font-size: 1.5em;
-}
-
-#language-selection .flag-icon {
-	cursor: pointer;
-	width: 36px;
-	height: 23px;
-}
-
-#language-selection .selected {
-	border-bottom: 4px solid #3465a4;
-	padding-bottom: 7px;
-}
-
-#language-selection {
-	padding-right: 30px;
 }
 
 .spacer {

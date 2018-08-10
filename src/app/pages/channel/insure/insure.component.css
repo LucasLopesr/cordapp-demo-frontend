@@ -1,2 +1,24 @@
-#insure {
+#insure h3 {
+	text-align: center;
+}
+
+#search {
+	width: 100%;
+}
+
+#search mat-icon {
+	vertical-align: middle;
+}
+
+#search mat-input-container {
+	width: 400px;
+}
+
+mat-table {
+	width: 100%;
+}
+
+.mat-column-selection {
+	text-align: center;
+	flex: 0 0 60px;
 }

@@ -1,13 +1,70 @@
 <div id="insure">
-	{{ 'insureProducts' | translate }}
+	<h3>{{ 'insureProducts' | translate }}</h3>
+
+	<div id="search">
+		<mat-icon>search</mat-icon>
+	    <mat-input-container class="div-panel container-space">
+	      	<input matInput placeholder="{{ 'search' | translate }}">
+	    </mat-input-container>
+    </div>
+    
+	<mat-table class="lessons-table mat-elevation-z2" [dataSource]="dataSource">
+    
+	    <ng-container matColumnDef="nku">
+	        <mat-header-cell *matHeaderCellDef>{{ 'nku' | translate }}</mat-header-cell>
+	        <mat-cell class="nku-cell" *matCellDef="let row">
+	        	{{row.product.nku}}
+	        </mat-cell>
+	    </ng-container>
 	
-	<mat-icon>search</mat-icon>
-	<input value="Pesquisar" />
-	<br/>
-	_________________<br/>
-	NKU	Marca	Valor	Descrição<br/>
-	_________________<br/>
-	409	Sony	R$6.123,62	Smart TV	<input type="check" /><br/>
-	_________________<br/>
+	    <ng-container matColumnDef="brand">
+	        <mat-header-cell *matHeaderCellDef>{{ 'brand' | translate }}</mat-header-cell>
+	        <mat-cell class="brand-cell" *matCellDef="let row">
+	        	{{row.product.brand}}
+	        </mat-cell>
+	    </ng-container>
+	
+	    <ng-container matColumnDef="price">
+	        <mat-header-cell *matHeaderCellDef>{{ 'price' | translate }}</mat-header-cell>
+	        <mat-cell class="price-cell" *matCellDef="let row">
+	        	{{row.product.price}}
+	        </mat-cell>
+	    </ng-container>
+	
+	    <ng-container matColumnDef="description">
+	        <mat-header-cell *matHeaderCellDef>{{ 'description' | translate }}</mat-header-cell>
+	        <mat-cell class="description-cell" *matCellDef="let row">
+	        	{{row.product.description}}
+	        </mat-cell>
+	    </ng-container>
+	
+	    <ng-container class="selection-container" matColumnDef="selection">
+	    	<mat-header-cell *matHeaderCellDef>{{ 'insure' | translate }}</mat-header-cell>
+	        <mat-cell class="selection-cell" *matCellDef="let row">
+	        	<mat-checkbox color="primary" [(ngModel)]="row.selected"></mat-checkbox>
+	        </mat-cell>
+	    </ng-container>
+	    
+	    <ng-container matColumnDef="expandedDetail">
+	      <mat-cell *matCellDef="let row"> 
+	        NKU: {{ row.product.product.nku }}
+	      </mat-cell>
+	    </ng-container>
+
+	    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+	    <mat-row *matRowDef="let row; columns: displayedColumns;"
+            matRipple class="product-row"></mat-row>
+	
+	    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+	            [@detailExpand]="row.product.selected ? 'expanded' : 'collapsed'"
+	            style="overflow: hidden"> 
+	    </mat-row>
+
+	</mat-table>	
+
+<br/>
+
+
 	{{ 'total$' | translate }} 0,00		<button>Contratar</button>
+	
 </div>
