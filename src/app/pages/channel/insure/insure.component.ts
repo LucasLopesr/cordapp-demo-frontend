@@ -28,7 +28,6 @@ const data: ProductSelection[] = [
   ],
 })
 export class ChannelInsureComponent implements OnInit {
-
   displayedColumns = ['nku', 'brand', 'price', 'description', 'selection'];
   displayedDColumns = ['selection', 'name', 'price', 'description'];
 
@@ -46,6 +45,29 @@ export class ChannelInsureComponent implements OnInit {
     });
     this.header.setTitle('channelMicroinsurance', {name: this.name});
     this.dataSource = new MatTableDataSource(this.createRows());
+    this.dataSource.filterPredicate = (row: Object, filter: string) => {
+      const product = this.getProduct(row);
+
+      return this.filterAttr(product.nku, filter)
+          || this.filterAttr(product.brand, filter)
+          || this.filterAttr(product.description, filter);
+    };
+  }
+
+  filterAttr(attribute: string, value: string): boolean {
+    return attribute.toLowerCase().indexOf(value.toLowerCase()) > -1;
+  }
+
+  isProductRow(row: Object) {
+    return !row.hasOwnProperty('parent');
+  }
+
+  getProduct(row: Object): Product {
+    return this.isProductRow(row) ? row['product'] : row['parent']['product'];
+  }
+
+  filter(value: string) {
+    this.dataSource.filter = value;
   }
 
   createRows() {
@@ -60,7 +82,7 @@ export class ChannelInsureComponent implements OnInit {
     coverages.push({selected: false, nku: product.nku, name: 'Garantia Estendida', price: 93.34,
       description: 'Garantia adicional de 2 anos contra defeitos de fabricação'});
 
-    coverages.push({selected: true, nku: product.nku, name: 'Proteção contra Danos', price: 52.10,
+    coverages.push({selected: false, nku: product.nku, name: 'Proteção contra Danos', price: 52.10,
       description: 'Cobertura contra incêndio, raios e vendavais'});
 
     return coverages;

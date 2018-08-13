@@ -4,7 +4,7 @@
 	<div id="search">
 		<mat-icon>search</mat-icon>
 	    <mat-input-container class="div-panel container-space">
-	      	<input matInput placeholder="{{ 'search' | translate }}">
+	      	<input matInput placeholder="{{ 'search' | translate }}" #search (input)="filter(search.value)">
 	    </mat-input-container>
     </div>
     

@@ -30,3 +30,7 @@ mat-table {
 .coverages-table mat-cell {
 	color: #3465a4;
 }
+
+.coverages-table mat-row:last-child {
+	border-bottom: 0;
+}
