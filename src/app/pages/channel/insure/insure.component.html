@@ -41,7 +41,10 @@
 	    <ng-container class="selection-container" matColumnDef="selection">
 	    	<mat-header-cell *matHeaderCellDef>{{ 'insure' | translate }}</mat-header-cell>
 	        <mat-cell class="selection-cell" *matCellDef="let row">
-	        	<mat-checkbox color="primary" [(ngModel)]="row.selected"></mat-checkbox>
+	        	<mat-checkbox color="primary" 
+	        		[(ngModel)]="row.selected"
+			        (change)="calculateTotal()">
+			    </mat-checkbox>
 	        </mat-cell>
 	    </ng-container>
 	    
@@ -52,7 +55,10 @@
 	
 			    <ng-container class="selection-container" matColumnDef="selection">
 			        <mat-cell class="selection-cell" *matCellDef="let coverage">
-			        	<mat-checkbox color="primary" [(ngModel)]="coverage.selected"></mat-checkbox>
+			        	<mat-checkbox color="primary" 
+			        		[(ngModel)]="coverage.selected"
+			        		(change)="calculateTotal()">
+			        	</mat-checkbox>
 			        </mat-cell>
 			    </ng-container>
 			
@@ -74,17 +80,15 @@
 			        </mat-cell>
 			    </ng-container>
 	    
-				<mat-row *matRowDef="let row; columns: displayedDColumns;"
+				<mat-row *matRowDef="let row; columns: displayedCoverageColumns;"
             matRipple class="product-row"></mat-row>
 			</mat-table>
-
-
 
 	      </mat-cell>
 	    </ng-container>
 
-	    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-	    <mat-row *matRowDef="let row; columns: displayedColumns;"
+	    <mat-header-row *matHeaderRowDef="displayedProductColumns"></mat-header-row>
+	    <mat-row *matRowDef="let row; columns: displayedProductColumns;"
             matRipple class="product-row"></mat-row>
 	
 	    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isCoverageRow"
@@ -94,9 +98,10 @@
 
 	</mat-table>	
 
-<br/>
-
-
-	{{ 'total$' | translate }} 0,00		<button>Contratar</button>
+	<mat-toolbar-row>
+		<span id="total">{{ 'total' | translate }}: {{ getTotal() | localizedCurrency }}</span>
+		<span class="spacer"></span>
+		<button mat-raised-button color="primary">{{ 'hire' | translate }}</button>
+	</mat-toolbar-row>
 	
 </div>

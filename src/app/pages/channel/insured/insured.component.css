@@ -1,0 +1,81 @@
+#insured h3 {
+	text-align: center;
+}
+
+#search mat-icon {
+	vertical-align: middle;
+}
+
+#search mat-input-container {
+	width: 400px;
+}
+
+#search, mat-table {
+	width: 100%;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+/* Summary */
+
+#summary {
+	padding: 20px 0 10px 0;
+}
+
+#total, #pie-chart, #bar-chart {
+	display: inline-block;
+	vertical-align: top;
+}
+
+#total {
+	font-size: 1.2em;
+	width: 15%;
+	padding-top: 10px;
+}
+
+#total .item {
+	padding-top: 20px;
+}
+
+#total .item .label {
+	font-weight: bold;
+}
+
+#pie-chart {
+	width: 40%;
+}
+
+#bar-chart {
+	width: 40%;
+}
+
+/* Products Table */
+
+.products-table mat-cell,
+.products-table mat-header-cell {
+	padding: 10px;
+}
+
+.products-table .mat-column-date,
+.products-table mat-header-row .mat-column-billed,
+.products-table mat-header-row .mat-column-comission {
+	text-align: center;
+}
+
+.products-table mat-row .mat-column-billed,
+.products-table mat-row .mat-column-comission {
+	text-align: right;
+}
+
+.products-table .mat-column-product,
+.products-table .mat-column-insurance {
+	text-align: left;
+}
+
+.products-table .mat-column-date,
+.products-table .mat-column-billed,
+.products-table .mat-column-comission {
+	flex: 0 0 130px;
+}

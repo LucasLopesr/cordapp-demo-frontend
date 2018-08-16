@@ -1,19 +1,11 @@
 import {AppHeaderComponent} from '../../../layout/header/app.header.component';
 import {AppHeaderService} from '../../../layout/header/app.header.service';
 import { Product } from '../../../model/product.model';
-import { ProductSelection } from './product-selection.model';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material';
-
-const data: ProductSelection[] = [
-  {product: {nku: '409', brand: 'Sony', price: 6123.62, description: 'Smart TV 42 Polegadas Led 4K SNY7654'}, selected: false},
-  {product: {nku: '111', brand: 'Philco', price: 5123.04, description: 'Smart TV 40 Polegadas Led 4K PH89898'}, selected: false},
-  {product: {nku: '075', brand: 'LG', price: 7123.25, description: 'Smart TV 50 Polegadas Led 4K LG50231'}, selected: true},
-  {product: {nku: '053', brand: 'Samsung', price: 9123.12, description: 'Smart TV 64 Polegadas Led 4K MU6400'}, selected: false}
-];
 
 @Component({
   selector: 'app-channel-insure',
@@ -27,13 +19,14 @@ const data: ProductSelection[] = [
     ]),
   ],
 })
-export class ChannelInsureComponent implements OnInit {
-  displayedColumns = ['nku', 'brand', 'price', 'description', 'selection'];
-  displayedDColumns = ['selection', 'name', 'price', 'description'];
+export class ChannelInsureComponent implements OnInit  {
+  displayedProductColumns = ['nku', 'brand', 'price', 'description', 'selection'];
+  displayedCoverageColumns = ['selection', 'name', 'price', 'description'];
 
   dataSource: MatTableDataSource<any>;
 
   private name: string;
+  private total: number;
 
   constructor(private activatedRoute: ActivatedRoute,
     private header: AppHeaderService,
@@ -52,6 +45,7 @@ export class ChannelInsureComponent implements OnInit {
           || this.filterAttr(product.brand, filter)
           || this.filterAttr(product.description, filter);
     };
+    this.calculateTotal();
   }
 
   filterAttr(attribute: string, value: string): boolean {
@@ -71,8 +65,14 @@ export class ChannelInsureComponent implements OnInit {
   }
 
   createRows() {
+  	const data: object[] = [
+  	  {product: {nku: '409', brand: 'Sony', price: 6123.62, description: 'Smart TV 42 Polegadas Led 4K SNY7654'}, selected: false},
+  	  {product: {nku: '111', brand: 'Philco', price: 5123.04, description: 'Smart TV 40 Polegadas Led 4K PH89898'}, selected: false},
+  	  {product: {nku: '075', brand: 'LG', price: 7123.25, description: 'Smart TV 50 Polegadas Led 4K LG50231'}, selected: false},
+  	  {product: {nku: '053', brand: 'Samsung', price: 9123.12, description: 'Smart TV 64 Polegadas Led 4K MU6400'}, selected: false}
+  	];
     const rows = [];
-    data.forEach(row => rows.push(row, {parent: row, coverages: this.createCoverages(row.product) }));
+    data.forEach(row => rows.push(row, {parent: row, coverages: this.createCoverages(row['product']) }));
     return rows;
   }
 
@@ -88,8 +88,34 @@ export class ChannelInsureComponent implements OnInit {
     return coverages;
   }
 
-  getName() {
+  getName(): string {
     return this.name;
+  }
+
+  getTotal(): number {
+    return this.total;
+  }
+
+  calculateTotal() {
+    let result = 0;
+    for (let row of this.dataSource.data) {
+      if (!this.isProductRow(row)) {
+        if (row['parent']['selected'] === true) {
+          result += this.calculateCoverages(row['coverages']);  				
+        }
+      }
+    }
+    this.total = result;
+  }
+  
+  calculateCoverages(coverages: object[]) {
+  	let result = 0;
+  	for (let coverage of coverages) {
+  		if (coverage['selected'] === true) {
+  			result += coverage['price'];
+  		}
+  	}
+  	return result;
   }
 
   /**

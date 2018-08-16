@@ -14,6 +14,8 @@ import localePt from '@angular/common/locales/pt';
 import { LocalizedCurrencyPipe } from '../data/localized-currency.pipe';
 import { LocalizedDatePipe } from '../data/localized-date.pipe';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { AppComponent } from '../app.component';
 import { AppHeaderComponent } from '../layout/header/app.header.component';
 import { AppMenuComponent } from '../layout/menu/app.menu.component';
@@ -53,6 +55,7 @@ registerLocaleData(localePt, 'pt-BR');
     MaterialModule,
     TranslationModule,
     ReactiveFormsModule,
+    ChartsModule,
   ],
   providers: [
     HttpClientModule,

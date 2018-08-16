@@ -16,22 +16,15 @@ export class LocalizedCurrencyPipe implements PipeTransform {
 
   transform(currentValue: number): string {
     const currentLang = this.translate.currentLang;
-    
-    /*
-     * Para efeitos de demonstração, valores são alterados junto à internacionalização
-     */
-    if (currentLang === 'en-US') {
-      currentValue = currentValue / 4;
-    }
 
     if (this.useCache(currentValue, currentLang)) {
       return this.value;
     }
-    
+
     return this.updateCache(currentValue, currentLang, new CurrencyPipe(currentLang)
           .transform(currentValue, this.getCurrencyCode(currentLang)));
   }
-  
+
   private getCurrencyCode(lang: string) {
     return lang === 'pt-BR' ? 'BRL' : 'USD';
   }

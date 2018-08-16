@@ -1,7 +1,7 @@
 mat-toolbar {
 	padding-left: 30px;
 	height: 80px;
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 }
 

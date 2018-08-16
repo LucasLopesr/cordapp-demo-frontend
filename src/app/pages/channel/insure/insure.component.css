@@ -2,10 +2,6 @@
 	text-align: center;
 }
 
-#search {
-	width: 100%;
-}
-
 #search mat-icon {
 	vertical-align: middle;
 }
@@ -14,17 +10,88 @@
 	width: 400px;
 }
 
-mat-table {
+#search, mat-table {
 	width: 100%;
 }
 
-.mat-column-selection {
+.spacer {
+	flex: 1 1 auto;
+}
+
+#total {
+	text-transform: bold;
+	font-size: 1.4em;
+}
+
+/* Products Table */
+
+.products-table mat-cell,
+.products-table mat-header-cell {
+	padding: 10px;
+}
+
+.products-table .mat-column-nku,
+.products-table mat-header-row .mat-column-price,
+.products-table .mat-column-selection {
 	text-align: center;
+}
+
+.products-table mat-row .mat-column-price {
+	text-align: right;
+}
+
+.products-table .mat-column-description,
+.products-table .mat-column-brand {
+	text-align: left;
+}
+
+.products-table .mat-column-nku {
 	flex: 0 0 60px;
 }
 
-.products-table mat-cell {
-	padding: 10px 0;
+.products-table .mat-column-brand {
+	flex: 0 0 200px;
+}
+
+.products-table .mat-column-price {
+	flex: 0 0 150px;
+}
+
+.products-table .mat-column-selection {
+	flex: 0 0 70px;
+}
+
+/* Coverage Table */
+
+.coverages-table mat-cell,
+.coverages-table mat-header-cell {
+	padding: 10px;
+}
+
+.coverages-table .mat-column-selection,
+.coverages-table mat-header-row .mat-column-price {
+	text-align: center;
+}
+
+.coverages-table mat-row .mat-column-price {
+	text-align: right;
+}
+
+.coverages-table .mat-column-name,
+.coverages-table .mat-column-description {
+	text-align: left;
+}
+
+.coverages-table .mat-column-selection {
+	flex: 0 0 40px;
+}
+
+.coverages-table .mat-column-name {
+	flex: 0 0 236px;
+}
+
+.coverages-table .mat-column-price {
+	flex: 0 0 100px;
 }
 
 .coverages-table mat-cell {

@@ -1,21 +1,90 @@
-<div id="insured"><br/>
-	{{ 'insuredProducts' | translate }}<br/>
-	<br/>
-	Faturado<br/>
-	R$ 2.000,00 (internacionalizar pontuação)<br/>
-	<br/>
-	Comissão<br/>
-	R$ 000,00<br/>
-<br/>	
-	gráficos<br/>
-	<br/>
-	<mat-icon>search</mat-icon>
-	<input value="Pesquisar" />
-	<br/>
-	_________________<br/>
-	Produto  Seguro   Data   Faturado   Comissão<br/>
-	_________________<br/>
-	TV	Garantia Y	06/06/2018	R$ 93,94  R$ 4,67<br/>
-	    Garantia X
-	<br/>
+<div id="insured">
+	<h3>{{ 'insuredProducts' | translate }}</h3>
+	
+	<div id="summary">
+		<div id="total">
+			<div class="item">
+				<div class="label">{{ 'billedAmount' | translate }}</div>
+				<div class="value">{{ getBilledAmount() | localizedCurrency }}</div>
+			</div>
+			<div class="item">
+				<div class="label">{{ 'salesCommission' | translate }}</div>
+				<div class="value">{{ getSalesCommission() | localizedCurrency }}</div>
+			</div>
+		</div>
+	
+	    <div id="pie-chart">
+	      <canvas baseChart
+	              [data]="pieChartData"
+	              [labels]="pieChartLabel"
+	              [chartType]="'pie'">
+	      </canvas>
+	    </div>
+	    
+	   	<div id="bar-chart">
+	    	<canvas baseChart
+	            [datasets]="barChartData"
+	            [labels]="barChartLabels"
+	            [options]="{scaleShowVerticalLines: false, responsive: true,
+	            	scales: {xAxes: [{stacked: true}], yAxes: [{stacked: true}]}}"
+	            [legend]="true"
+	            [chartType]="'bar'">
+	        </canvas>
+	  </div>
+	</div>
+
+	
+
+	<div id="search">
+		<mat-icon>search</mat-icon>
+	    <mat-input-container class="div-panel container-space">
+	      	<input matInput placeholder="{{ 'search' | translate }}" #search (input)="filter(search.value)">
+	    </mat-input-container>
+    </div>
+    
+	<mat-table class="products-table mat-elevation-z2" [dataSource]="dataSource">
+    
+	    <ng-container matColumnDef="product">
+	        <mat-header-cell *matHeaderCellDef>{{ 'product' | translate }}</mat-header-cell>
+	        <mat-cell class="product-cell" *matCellDef="let row">
+	        	{{row.product}}
+	        </mat-cell>
+	    </ng-container>
+	
+	    <ng-container matColumnDef="insurance">
+	        <mat-header-cell *matHeaderCellDef>{{ 'insurance' | translate }}</mat-header-cell>
+	        <mat-cell class="insurance-cell" *matCellDef="let row">
+	        	<div *ngFor="let insurance of row.insurances">
+	        		<div>{{insurance.name}}</div>
+	        	</div>
+	        </mat-cell>
+	    </ng-container>
+	
+	    <ng-container matColumnDef="date">
+	        <mat-header-cell *matHeaderCellDef>{{ 'date' | translate }}</mat-header-cell>
+	        <mat-cell class="date-cell" *matCellDef="let row">
+	        	{{row.date | localizedDate }}
+	        </mat-cell>
+	    </ng-container>
+	
+	    <ng-container matColumnDef="billed">
+	        <mat-header-cell *matHeaderCellDef>{{ 'billedAmount' | translate }}</mat-header-cell>
+	        <mat-cell class="billed-cell" *matCellDef="let row">
+	        	{{row.billed | localizedCurrency}}
+	        </mat-cell>
+	    </ng-container>
+	
+	    <ng-container matColumnDef="comission">
+	        <mat-header-cell *matHeaderCellDef>{{ 'salesCommission' | translate }}</mat-header-cell>
+	        <mat-cell class="comission-cell" *matCellDef="let row">
+	        	{{row.comission | localizedCurrency}}
+	        </mat-cell>
+	    </ng-container>
+	
+	    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+	    <mat-row *matRowDef="let row; columns: displayedColumns;"
+            matRipple class="product-row"></mat-row>
+	
+	</mat-table>	
+
 </div>
