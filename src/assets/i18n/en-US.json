@@ -5,6 +5,7 @@
 	"channel": "Channel",
 	"insurer": "Insurer",
 	"channelMicroinsurance": "Channel {{name}} - Microinsurance",
+	"insurerMicroinsurance": "Insurer - Microinsurance",
 	"insure": "Insure",
 	"insureProducts": "Insure products",
 	"insuredProducts": "Insured products",

@@ -91,22 +91,22 @@ export class ChannelInsuredComponent implements OnInit {
 
   createRows() {
     const data: object[] = [
-      {product: 'Smart TV 64 Polegadas Led 4K MU6400', 
+      {product: 'Smart TV 64 Polegadas Led 4K MU6400',
         insurances: [{name: 'Garantia X', billed: 73.4, comission: 3.23},
-                     {name: 'Garantia Y', billed: 20.54, comission: 2.44}], 
+                     {name: 'Garantia Y', billed: 20.54, comission: 2.44}],
         date: '2018-06-06', billed: 93.94, comission: 5.67 },
 
       {product: 'Smart TV 40 Polegadas', 
-        insurances: [{name: 'Garantia Z', billed:123.4, comission: 8.56}], 
+        insurances: [{name: 'Garantia Z', billed:123.4, comission: 8.56}],
         date: '2017-06-07', billed: 123.4, comission: 8.56 },
 
       {product: 'Smart TV 32 Polegadas FH5000', 
         insurances: [{name: 'Garantia Z', billed: 473.1, comission: 18.23},
-                     {name: 'Garantia Y', billed: 209.04, comission: 15.63}], 
+                     {name: 'Garantia Y', billed: 209.04, comission: 15.63}],
         date: '2016-06-09', billed: 682.14, comission: 33.86 },
 
       {product: 'Smart TV 90 Polegadas Led 4K AXD', 
-        insurances: [{name: 'Garantia X', billed: 278.0, comission: 84.5}], 
+        insurances: [{name: 'Garantia X', billed: 278.0, comission: 84.5}],
         date: '2016-12-25', billed: 278.0, comission: 84.5 }
     ];
     return data;

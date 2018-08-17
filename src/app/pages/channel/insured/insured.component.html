@@ -33,8 +33,6 @@
 	  </div>
 	</div>
 
-	
-
 	<div id="search">
 		<mat-icon>search</mat-icon>
 	    <mat-input-container class="div-panel container-space">
@@ -70,21 +68,23 @@
 	    <ng-container matColumnDef="billed">
 	        <mat-header-cell *matHeaderCellDef>{{ 'billedAmount' | translate }}</mat-header-cell>
 	        <mat-cell class="billed-cell" *matCellDef="let row">
-	        	{{row.billed | localizedCurrency}}
+	        	<div *ngFor="let insurance of row.insurances">
+	        		<div>{{insurance.billed | localizedCurrency}}</div>
+	        	</div>
 	        </mat-cell>
 	    </ng-container>
 	
 	    <ng-container matColumnDef="comission">
 	        <mat-header-cell *matHeaderCellDef>{{ 'salesCommission' | translate }}</mat-header-cell>
 	        <mat-cell class="comission-cell" *matCellDef="let row">
-	        	{{row.comission | localizedCurrency}}
+	        	<div *ngFor="let insurance of row.insurances">
+	        		<div>{{insurance.comission | localizedCurrency}}</div>
+	        	</div>
 	        </mat-cell>
 	    </ng-container>
 	
 	    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-	    <mat-row *matRowDef="let row; columns: displayedColumns;"
-            matRipple class="product-row"></mat-row>
+	    <mat-row *matRowDef="let row; columns: displayedColumns;" class="product-row"></mat-row>
 	
 	</mat-table>	
-
 </div>
