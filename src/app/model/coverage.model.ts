@@ -1,8 +1,7 @@
-export class Product {
+export class Coverage {
 
   id: string;
-  nku: string;
-  brand: string;
+  name: string;
   description: string;
   price: number;
 

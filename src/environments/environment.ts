@@ -3,15 +3,12 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-const urlRetailer1 = '/cordapp-demo-backend/varejista1/api';
-const urlRetailer2 = '/cordapp-demo-backend/varejista2/api';
-const urlInsurer = '/cordapp-demo-backend/seguradora/api';
-
 export const environment = {
   production: false,
-  apiUrlRetailer1: urlRetailer1,
-  apiUrlVarejista2: urlRetailer2,
-  apiUrlInsurer: urlInsurer,
+  apiUrlChannel1: 'http://localhost:10010/api',
+  apiUrlChannel2: 'http://localhost:10013/api',
+  apiUrlInsurer: 'http://localhost:10015/api',
   languages: ['en-US', 'pt-BR'],
   language: 'pt-BR'
 };
+

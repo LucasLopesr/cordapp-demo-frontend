@@ -1,11 +1,14 @@
 import {AppHeaderComponent} from '../../../layout/header/app.header.component';
 import {AppHeaderService} from '../../../layout/header/app.header.service';
-import { Product } from '../../../model/product.model';
+import {Coverage} from '../../../model/coverage.model';
+import {Product} from '../../../model/product.model';
+import {CoverageService} from '../../../shared/services/insurance.service';
+import {ProductService} from '../../../shared/services/product.service';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatTableDataSource } from '@angular/material';
+import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-channel-insure',
@@ -13,13 +16,13 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./insure.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
-      state('expanded', style({ height: '*', visibility: 'visible' })),
+      state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
+      state('expanded', style({height: '*', visibility: 'visible'})),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
-export class ChannelInsureComponent implements OnInit  {
+export class ChannelInsureComponent implements OnInit {
   displayedProductColumns = ['nku', 'brand', 'price', 'description', 'selection'];
   displayedCoverageColumns = ['selection', 'name', 'price', 'description'];
 
@@ -30,22 +33,66 @@ export class ChannelInsureComponent implements OnInit  {
 
   constructor(private activatedRoute: ActivatedRoute,
     private header: AppHeaderService,
-    private translate: TranslateService) {}
+    private translate: TranslateService,
+    private insuranceService: CoverageService,
+    private productService: ProductService) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.name = params['id'] === '1' ? 'A' : 'B';
     });
     this.header.setTitle('channelMicroinsurance', {name: this.name});
-    this.dataSource = new MatTableDataSource(this.createRows());
+    this.initData();
+  }
+
+  initData() {
+    this.requestData();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.requestData();
+    });
+  }
+
+  requestData() {
+    this.productService.getProducts().subscribe(products => {
+      this.insuranceService.getCoverages().subscribe(insurances => {
+        this.updateData(products, insurances);
+      });
+    });
+  }
+
+  updateData(products: Product[], coverages: Coverage[]) {
+    this.dataSource = new MatTableDataSource(this.createRows(products, coverages));
     this.dataSource.filterPredicate = (row: Object, filter: string) => {
       const product = this.getProduct(row);
 
       return this.filterAttr(product.nku, filter)
-          || this.filterAttr(product.brand, filter)
-          || this.filterAttr(product.description, filter);
+        || this.filterAttr(product.brand, filter)
+        || this.filterAttr(product.description, filter);
     };
     this.calculateTotal();
+  }
+
+  createRows(products: Product[], coverages: Coverage[]) {
+    const rows = [];
+
+    products.forEach(product => {
+      const row = {product: product, selected: false};
+      rows.push(row, {parent: row, coverages: this.cloneCoverages(coverages)});
+    });
+
+    return rows;
+  }
+
+  cloneCoverages(coverages: Coverage[]) {
+    const data = [];
+
+    coverages.forEach(coverage => {
+      const clonned = Object.create(coverage);
+      clonned['selected'] = false;
+      data.push(clonned);
+    });
+
+    return data;
   }
 
   filterAttr(attribute: string, value: string): boolean {
@@ -64,30 +111,6 @@ export class ChannelInsureComponent implements OnInit  {
     this.dataSource.filter = value;
   }
 
-  createRows() {
-  	const data: object[] = [
-  	  {product: {nku: '409', brand: 'Sony', price: 6123.62, description: 'Smart TV 42 Polegadas Led 4K SNY7654'}, selected: false},
-  	  {product: {nku: '111', brand: 'Philco', price: 5123.04, description: 'Smart TV 40 Polegadas Led 4K PH89898'}, selected: false},
-  	  {product: {nku: '075', brand: 'LG', price: 7123.25, description: 'Smart TV 50 Polegadas Led 4K LG50231'}, selected: false},
-  	  {product: {nku: '053', brand: 'Samsung', price: 9123.12, description: 'Smart TV 64 Polegadas Led 4K MU6400'}, selected: false}
-  	];
-    const rows = [];
-    data.forEach(row => rows.push(row, {parent: row, coverages: this.createCoverages(row['product']) }));
-    return rows;
-  }
-
-  createCoverages(product: Product) {
-    const coverages = [];
-
-    coverages.push({selected: false, nku: product.nku, name: 'Garantia Estendida', price: 93.34,
-      description: 'Garantia adicional de 2 anos contra defeitos de fabricação'});
-
-    coverages.push({selected: false, nku: product.nku, name: 'Proteção contra Danos', price: 52.10,
-      description: 'Cobertura contra incêndio, raios e vendavais'});
-
-    return coverages;
-  }
-
   getName(): string {
     return this.name;
   }
@@ -101,21 +124,21 @@ export class ChannelInsureComponent implements OnInit  {
     for (let row of this.dataSource.data) {
       if (!this.isProductRow(row)) {
         if (row['parent']['selected'] === true) {
-          result += this.calculateCoverages(row['coverages']);  				
+          result += this.calculateCoverages(row['coverages']);
         }
       }
     }
     this.total = result;
   }
-  
-  calculateCoverages(coverages: object[]) {
-  	let result = 0;
-  	for (let coverage of coverages) {
-  		if (coverage['selected'] === true) {
-  			result += coverage['price'];
-  		}
-  	}
-  	return result;
+
+  calculateCoverages(coverages: Coverage[]) {
+    let result = 0;
+    for (const coverage of coverages) {
+      if (coverage['selected'] === true) {
+        result += coverage.price;
+      }
+    }
+    return result;
   }
 
   /**

@@ -11,10 +11,13 @@ import { MaterialModule } from './material.module';
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { LocalizedCurrencyPipe } from '../data/localized-currency.pipe';
-import { LocalizedDatePipe } from '../data/localized-date.pipe';
+import { LocalizedCurrencyPipe } from '../shared/pipe/localized-currency.pipe';
+import { LocalizedDatePipe } from '../shared/pipe/localized-date.pipe';
 
 import { ChartsModule } from 'ng2-charts';
+
+import { ProductService } from '../shared/services/product.service';
+import { CoverageService } from '../shared/services/insurance.service';
 
 import { AppComponent } from '../app.component';
 import { AppHeaderComponent } from '../layout/header/app.header.component';
@@ -59,7 +62,9 @@ registerLocaleData(localePt, 'pt-BR');
   ],
   providers: [
     HttpClientModule,
-    AppHeaderService
+    AppHeaderService,
+    CoverageService,
+    ProductService
   ],
   bootstrap: [AppComponent]
 })
