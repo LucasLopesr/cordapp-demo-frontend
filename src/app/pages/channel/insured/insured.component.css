@@ -31,7 +31,7 @@
 
 #total {
 	font-size: 1.2em;
-	width: 15%;
+	width: 13%;
 	padding-top: 10px;
 }
 
@@ -44,11 +44,11 @@
 }
 
 #pie-chart {
-	width: 40%;
+	width: 38%;
 }
 
 #bar-chart {
-	width: 40%;
+	width: 45%;
 }
 
 /* Products Table */

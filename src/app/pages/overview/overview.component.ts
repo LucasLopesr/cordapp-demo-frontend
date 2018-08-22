@@ -1,4 +1,4 @@
-import { AppHeaderService } from '../../layout/header/app.header.service';
+import { AppHeaderService } from '../../shared/services/app.header.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';

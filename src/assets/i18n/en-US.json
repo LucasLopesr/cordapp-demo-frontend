@@ -25,12 +25,15 @@
 	"billedAmount": "Billed Amount",
 	"search": "Search",
 	"searchProduct": "Search product",
+	"searchProductOrInsurance": "Search product or insurance",
 	"hire": "Hire",
 	"done": "Done",
-	"transactionDone": "Transaction is done",
+	"transactionDone": "Transaction {{id}} is done",
 	"wait": "Wait",
 	"sao_paulo": "Sao Paulo",
 	"brazil": "Brazil",
 	"pageNotFound": "Oops! Page not found.",
-	"goBack": "Go back"
+	"goBack": "Go back",
+	"noProductSelected": "No products were selected!",
+	"noCoverageHired": "NKU: {{nku}} - No coverage were hired!"
 }

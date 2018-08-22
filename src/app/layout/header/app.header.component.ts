@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import {AppHeaderService} from './app.header.service';
+import {AppHeaderService} from '../../shared/services/app.header.service';
 
 @Component({
   selector: 'app-header',

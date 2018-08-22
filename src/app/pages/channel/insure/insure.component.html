@@ -81,7 +81,7 @@
 			    </ng-container>
 	    
 				<mat-row *matRowDef="let row; columns: displayedCoverageColumns;"
-            matRipple class="product-row"></mat-row>
+            		class="product-row"></mat-row>
 			</mat-table>
 
 	      </mat-cell>
@@ -89,7 +89,7 @@
 
 	    <mat-header-row *matHeaderRowDef="displayedProductColumns"></mat-header-row>
 	    <mat-row *matRowDef="let row; columns: displayedProductColumns;"
-            matRipple class="product-row"></mat-row>
+        	class="product-row"></mat-row>
 	
 	    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isCoverageRow"
 	            [@detailExpand]="row.parent.selected ? 'expanded' : 'collapsed'"
@@ -101,7 +101,7 @@
 	<mat-toolbar-row>
 		<span id="total">{{ 'total' | translate }}: {{ getTotal() | localizedCurrency }}</span>
 		<span class="spacer"></span>
-		<button mat-raised-button color="primary">{{ 'hire' | translate }}</button>
+		<button mat-raised-button color="primary" (click)="hire()">{{ 'hire' | translate }}</button>
 	</mat-toolbar-row>
 	
 </div>

@@ -1,19 +1,39 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Coverage } from '../../model/coverage.model';
-import { TranslateService } from '@ngx-translate/core';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {InsuranceRequest, Insurance} from '../../model/insurance.model';
+import {ChannelApiService} from './api/channel-api.service';
+import {InsurerApiService} from './api/insurer-api.service';
+import {TranslateService} from '@ngx-translate/core';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
-export class CoverageService {
-    constructor(private http: HttpClient, private translate: TranslateService) { }
+export class InsuranceService {
+  constructor(private http: HttpClient,
+    private translate: TranslateService,
+    private insurerApi: InsurerApiService,
+    private channelApi: ChannelApiService) {}
 
-    getCoverages(): Observable<Coverage[]> {
-        return this.http.get<Coverage[]>(environment.apiUrlChannel1 + '/v1/coverages', {
-          params: {
-            lang: this.translate.currentLang
-          }
-        });
-    }
+  createInsurance(channel: number, insurance: InsuranceRequest): Observable<any> {
+    return this.http.post(this.channelApi.getInsurancesResource(channel), insurance, {
+      params: {
+        lang: this.translate.currentLang
+      }
+    });
+  }
+
+  getInsurances(channel: number): Observable<Insurance[]> {
+    return this.http.get<Insurance[]>(this.channelApi.getInsurancesResource(channel), {
+      params: {
+        lang: this.translate.currentLang
+      }
+    });
+  }
+
+  getInsurancesFromInsurer(): Observable<Insurance[]> {
+    return this.http.get<Insurance[]>(this.insurerApi.getInsurancesResource(), {
+      params: {
+        lang: this.translate.currentLang
+      }
+    });
+  }
 }

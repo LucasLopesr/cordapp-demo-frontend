@@ -31,7 +31,7 @@
 
 #total {
 	font-size: 1.2em;
-	width: 15%;
+	width: 13%;
 	padding-top: 10px;
 }
 
@@ -44,11 +44,11 @@
 }
 
 #pie-chart {
-	width: 40%;
+	width: 38%;
 }
 
 #bar-chart {
-	width: 40%;
+	width: 45%;
 }
 
 /* Products Table */
@@ -70,11 +70,13 @@
 }
 
 .products-table .mat-column-product,
+.products-table .mat-column-seller,
 .products-table .mat-column-insurance {
 	text-align: left;
 }
 
 .products-table .mat-column-date,
+.products-table .mat-column-seller,
 .products-table .mat-column-billed,
 .products-table .mat-column-comission {
 	flex: 0 0 130px;

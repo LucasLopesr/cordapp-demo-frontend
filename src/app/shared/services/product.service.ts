@@ -1,19 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Product } from '../../model/product.model';
-import { TranslateService } from '@ngx-translate/core';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {HttpClient} from '@angular/common/http';
+import {Product} from '../../model/product.model';
+import {ChannelApiService} from './api/channel-api.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable()
 export class ProductService {
-    constructor(private http: HttpClient, private translate: TranslateService) { }
+  constructor(private http: HttpClient, private translate: TranslateService, private api: ChannelApiService) {}
 
-    getProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(environment.apiUrlChannel1 + '/v1/products', {
-          params: {
-            lang: this.translate.currentLang
-          }
-        });
-    }
+  getProducts(channel: number): Observable<Product[]> {
+    return this.http.get<Product[]>(this.api.getProductsResource(channel), {
+      params: {
+        lang: this.translate.currentLang
+      }
+    });
+  }
 }

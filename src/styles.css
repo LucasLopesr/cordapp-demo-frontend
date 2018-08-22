@@ -5,3 +5,16 @@ body {
     background-color: #FFFFFF;
     font-family: 'Roboto', sans-serif;
 }
+
+snack-bar-container {
+    margin-top: 101px !important;
+    max-width: none !important;
+}
+
+.success-snackbar {
+    color: #7dbb6b;
+}
+
+.error-snackbar {
+    color: #f07979;
+}

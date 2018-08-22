@@ -1,11 +1,14 @@
 import {AppHeaderComponent} from '../../../layout/header/app.header.component';
-import {AppHeaderService} from '../../../layout/header/app.header.service';
-import { Product } from '../../../model/product.model';
+import {Coverage} from '../../../model/coverage.model';
+import {Insurance} from '../../../model/insurance.model';
+import {AppHeaderService} from '../../../shared/services/app.header.service';
+import {Product} from '../../../model/product.model';
+import {InsuranceService} from '../../../shared/services/insurance.service';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatTableDataSource } from '@angular/material';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-channel-insured',
@@ -13,8 +16,8 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./insured.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
-      state('expanded', style({ height: '*', visibility: 'visible' })),
+      state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
+      state('expanded', style({height: '*', visibility: 'visible'})),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -24,36 +27,55 @@ export class ChannelInsuredComponent implements OnInit {
   displayedColumns = ['product', 'insurance', 'date', 'billed', 'comission'];
   dataSource: MatTableDataSource<any>;
 
-  pieChartLabel: string[];
-  pieChartData: number[];
-  barChartLabels: string[];
-  barChartData: any[];
+  pieChartLabel: string[] = [];
+  pieChartData: number[] = [];
+  barChartLabels: string[] = [];
+  barChartData: any[] = [];
 
+  private lastData: Insurance[];
   private billedAmount: number;
   private salesCommission: number;
-  private name: string;
+  private id: number;
 
   constructor(private activatedRoute: ActivatedRoute,
     private header: AppHeaderService,
-    private translate: TranslateService) {}
+    private translate: TranslateService,
+    private insuranceService: InsuranceService) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.name = params['id'] === '1' ? 'A' : 'B';
+      this.id = params['id'];
     });
-    this.header.setTitle('channelMicroinsurance', {name: this.name});
-    this.dataSource = new MatTableDataSource(this.createRows());
+    this.header.setTitle('channelMicroinsurance', {name: this.id.toString() === '1' ? 'A' : 'B'});
+    this.initData();
+  }
+
+  private initData() {
+    this.requestData();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.requestData();
+    });
+  }
+
+  private requestData() {
+    this.insuranceService.getInsurances(this.id).subscribe(insurances => {
+      this.updateData(insurances);
+      this.updateCharts(insurances);
+    });
+  }
+
+  private updateData(insurances: Insurance[]) {
+    this.lastData = insurances;
+    this.dataSource = new MatTableDataSource(this.createRows(insurances));
     this.dataSource.filterPredicate = (row: Object, value: string) => {
 
       return this.filterAttr(row['product'], value)
-          || this.filterAttr(row['insurances'], value, 'name')
-          || this.filterAttr(row['date'], value);
+        || this.filterAttr(row['coverages'], value, 'name');
     };
     this.calculateTotal();
-    this.initCharts();
   }
 
-  filterAttr(attribute: any, value: string, attr?: string): boolean {
+  private filterAttr(attribute: any, value: string, attr?: string): boolean {
     if (attribute instanceof Array) {
       for (const item of attribute) {
         if (item[attr].toLowerCase().indexOf(value.toLowerCase()) > -1) {
@@ -73,9 +95,9 @@ export class ChannelInsuredComponent implements OnInit {
     let billedResult = 0;
     let commissionResult = 0;
 
-    for (const item of this.dataSource.data) {
-      billedResult += item['billed'];
-      commissionResult += item['comission'];
+    for (const insurance of this.lastData) {
+      billedResult += insurance.value;
+      commissionResult += insurance.value / 23;
     }
     this.billedAmount = billedResult;
     this.salesCommission = commissionResult;
@@ -89,46 +111,55 @@ export class ChannelInsuredComponent implements OnInit {
     return this.salesCommission;
   }
 
-  createRows() {
-    const data: object[] = [
-      {product: 'Smart TV 64 Polegadas Led 4K MU6400',
-        insurances: [{name: 'Garantia X', billed: 73.4, comission: 3.23},
-                     {name: 'Garantia Y', billed: 20.54, comission: 2.44}],
-        date: '2018-06-06', billed: 93.94, comission: 5.67 },
+  createRows(insurances: Insurance[]) {
+    const rows: object[] = [];
 
-      {product: 'Smart TV 40 Polegadas', 
-        insurances: [{name: 'Garantia Z', billed:123.4, comission: 8.56}],
-        date: '2017-06-07', billed: 123.4, comission: 8.56 },
+    insurances.forEach(insurance => {
+      rows.push({
+        product: insurance.product.description,
+        coverages: this.createRowCoverages(insurance.coverages),
+        date: new Date(insurance.timeInMilli),
+        billed: insurance.value,
+        comission: insurance.value / 23
+      });
+    });
+    return rows;
+  }
 
-      {product: 'Smart TV 32 Polegadas FH5000', 
-        insurances: [{name: 'Garantia Z', billed: 473.1, comission: 18.23},
-                     {name: 'Garantia Y', billed: 209.04, comission: 15.63}],
-        date: '2016-06-09', billed: 682.14, comission: 33.86 },
+  createRowCoverages(coverages: Coverage[]) {
+    const data: object[] = [];
 
-      {product: 'Smart TV 90 Polegadas Led 4K AXD', 
-        insurances: [{name: 'Garantia X', billed: 278.0, comission: 84.5}],
-        date: '2016-12-25', billed: 278.0, comission: 84.5 }
-    ];
+    coverages.forEach(coverage => {
+      data.push({
+        name: coverage.name,
+        billed: coverage.price,
+        comission: coverage.price / 23
+      });
+    });
     return data;
   }
 
-  initCharts() {
-    this.initPieChart();
-    this.initBarChart();
+  private updateCharts(insurances: Insurance[]) {
+    this.updatePieChart(insurances);
+    this.updateBarChart(insurances);
   }
 
-  initPieChart() {
+  private updatePieChart(insurances: Insurance[]) {
+    if (insurances.length === 0) {
+      return;
+    }
+
     const labels: string[] = [];
     const values: number[] = [];
 
-    for (const row of this.dataSource.data) {
-      for (const insurance of row['insurances']) {
-        const labelIndex = labels.indexOf(insurance['name']);
+    for (const insurance of insurances) {
+      for (const coverage of insurance.coverages) {
+        const labelIndex = labels.indexOf(coverage.name);
         if (labelIndex === -1) {
-          labels.push(insurance['name']);
-          values[labels.length - 1] = insurance.billed;
+          labels.push(coverage.name);
+          values[labels.length - 1] = coverage.price;
         } else {
-          values[labelIndex] += insurance.billed;
+          values[labelIndex] += coverage.price;
         }
       }
     }
@@ -136,13 +167,17 @@ export class ChannelInsuredComponent implements OnInit {
     this.pieChartData = values;
   }
 
-  initBarChart() {
+  private updateBarChart(insurances: Insurance[]) {
+    if (insurances.length === 0) {
+      return;
+    }
+
     const yearsLabels: string[] = [];
     const insuranceLabels: string[] = [];
     const values: any[] = [];
 
-    for (const row of this.dataSource.data) {
-      const year =  this.getYear(row.date);
+    for (const insurance of insurances) {
+      const year = this.getYear(insurance.timeInMilli);
       if (yearsLabels.indexOf(year) === -1) {
         yearsLabels.push(year);
       }
@@ -150,14 +185,14 @@ export class ChannelInsuredComponent implements OnInit {
 
     yearsLabels.sort();
 
-    for (const row of this.dataSource.data) {
-      const yearIndex = yearsLabels.indexOf(this.getYear(row.date));
+    for (const insurance of insurances) {
+      const yearIndex = yearsLabels.indexOf(this.getYear(insurance.timeInMilli));
 
-      for (const insurance of row['insurances']) {
+      for (const coverage of insurance.coverages) {
         if (insuranceLabels.indexOf(insurance['name']) === -1) {
           insuranceLabels.push(insurance['name']);
         }
-        this.updateValue(values, yearIndex, insurance.billed, insurance.name);
+        this.updateValue(values, yearIndex, coverage.price, coverage.name);
       }
     }
 
@@ -178,8 +213,8 @@ export class ChannelInsuredComponent implements OnInit {
     array.push(row);
   }
 
-  getYear(date: string): string {
-    return date.substring(0, 4);
+  getYear(timeInMilli: number): string {
+    return new Date(timeInMilli).getFullYear().toString();
   }
 
 }

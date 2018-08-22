@@ -13,20 +13,19 @@
 			</div>
 		</div>
 	
-	    <div id="pie-chart">
-	      <canvas baseChart
+	    <div id="pie-chart" >
+	      <canvas baseChart *ngIf="pieChartData.length > 0"
 	              [data]="pieChartData"
-	              [labels]="pieChartLabel"
 	              [chartType]="'pie'">
 	      </canvas>
 	    </div>
 	    
 	   	<div id="bar-chart">
-	    	<canvas baseChart
+	    	<canvas baseChart *ngIf="barChartData.length > 0"
 	            [datasets]="barChartData"
 	            [labels]="barChartLabels"
 	            [options]="{scaleShowVerticalLines: false, responsive: true,
-	            	scales: {xAxes: [{stacked: true}], yAxes: [{stacked: true}]}}"
+ 	            	scales: {xAxes: [{stacked: true}], yAxes: [{stacked: true}]}}"
 	            [legend]="true"
 	            [chartType]="'bar'">
 	        </canvas>
@@ -36,12 +35,19 @@
 	<div id="search">
 		<mat-icon>search</mat-icon>
 	    <mat-input-container class="div-panel container-space">
-	      	<input matInput placeholder="{{ 'search' | translate }}" #search (input)="filter(search.value)">
+	      	<input matInput placeholder="{{ 'searchProductOrInsurance' | translate }}" #search (input)="filter(search.value)">
 	    </mat-input-container>
     </div>
     
 	<mat-table class="products-table mat-elevation-z2" [dataSource]="dataSource">
     
+	    <ng-container matColumnDef="seller">
+	        <mat-header-cell *matHeaderCellDef>{{ 'salesChannel' | translate }}</mat-header-cell>
+	        <mat-cell class="seller-cell" *matCellDef="let row">
+	        	{{ 'channel' | translate }} {{row.seller}}
+	        </mat-cell>
+	    </ng-container>
+	    
 	    <ng-container matColumnDef="product">
 	        <mat-header-cell *matHeaderCellDef>{{ 'product' | translate }}</mat-header-cell>
 	        <mat-cell class="product-cell" *matCellDef="let row">
@@ -52,8 +58,8 @@
 	    <ng-container matColumnDef="insurance">
 	        <mat-header-cell *matHeaderCellDef>{{ 'insurance' | translate }}</mat-header-cell>
 	        <mat-cell class="insurance-cell" *matCellDef="let row">
-	        	<div *ngFor="let insurance of row.insurances">
-	        		<div>{{insurance.name}}</div>
+	        	<div *ngFor="let coverage of row.coverages">
+	        		<div>{{coverage.name}}</div>
 	        	</div>
 	        </mat-cell>
 	    </ng-container>
@@ -68,8 +74,8 @@
 	    <ng-container matColumnDef="billed">
 	        <mat-header-cell *matHeaderCellDef>{{ 'billedAmount' | translate }}</mat-header-cell>
 	        <mat-cell class="billed-cell" *matCellDef="let row">
-	        	<div *ngFor="let insurance of row.insurances">
-	        		<div>{{insurance.billed | localizedCurrency}}</div>
+	        	<div *ngFor="let coverage of row.coverages">
+	        		<div>{{coverage.billed | localizedCurrency}}</div>
 	        	</div>
 	        </mat-cell>
 	    </ng-container>
@@ -77,8 +83,8 @@
 	    <ng-container matColumnDef="comission">
 	        <mat-header-cell *matHeaderCellDef>{{ 'salesCommission' | translate }}</mat-header-cell>
 	        <mat-cell class="comission-cell" *matCellDef="let row">
-	        	<div *ngFor="let insurance of row.insurances">
-	        		<div>{{insurance.comission | localizedCurrency}}</div>
+	        	<div *ngFor="let coverage of row.coverages">
+	        		<div>{{coverage.comission | localizedCurrency}}</div>
 	        	</div>
 	        </mat-cell>
 	    </ng-container>

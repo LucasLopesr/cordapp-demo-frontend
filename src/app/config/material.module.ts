@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
@@ -8,6 +8,7 @@ import {
   MatMenuModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
+  MatSnackBarModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule
@@ -17,12 +18,13 @@ import {
   exports: [
     MatButtonModule,
     MatCardModule,
-  MatCheckboxModule,
+    MatCheckboxModule,
     MatIconModule,
     MatInputModule,
     MatMenuModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     MatSortModule,
     MatTableModule,
     MatToolbarModule

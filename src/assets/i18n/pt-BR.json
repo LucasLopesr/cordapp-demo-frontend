@@ -25,12 +25,15 @@
 	"billedAmount": "Faturado",
 	"search": "Pesquisar",
 	"searchProduct": "Pesquisar produto",
+	"searchProductOrInsurance": "Pesquisar produto ou seguro",
 	"hire": "Contratar",
 	"done": "Finalizado",
-	"transactionDone": "Transação concluída",
+	"transactionDone": "Transação {{id}} concluída",
 	"wait": "Aguarde",
 	"sao_paulo": "São Paulo",
 	"brazil": "Brasil",
 	"pageNotFound": "Ops! Página não encontrada.",
-	"goBack": "Voltar"
+	"goBack": "Voltar",
+	"noProductSelected": "Nenhum produto foi selecionado!",
+	"noCoverageHired": "NKU: {{nku}} - Nenhuma cobertura contratada!"
 }
