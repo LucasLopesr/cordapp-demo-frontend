@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve --env=local --proxy-config ./e2e/proxy.config.json --open --bh /cordapp-demo",
-    "build": "ng build --aot --env=local --bh /cordapp-demo --deploy /cordapp-demo",
-    "build-prd": "ng build --aot --prod --env=prd --bh /cordapp-demo --deploy /cordapp-demo",
+    "build": "ng build --env=local --bh /cordapp-demo --deploy /cordapp-demo",
+    "build-prod": "ng build -e=prod",
     "json-server": "json-server ./e2e/rest-mock.js --routes ./e2e/routes.json --port 8080"
   },
   "private": true,
