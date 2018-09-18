@@ -1,9 +1,0 @@
-{
-    "/arquivos/:id/registros": "/registros",
-    "/calculos/:id/itens": "/itens",
-    "/registros/:id/atualizar": "/atualizar",
-    "/registros/:id/ignorar": "/ignorar",
-    "/arquivos/:id/validar": "/validar",
-    "/calculos/:id": "/calculo",
-    "/ajustamentos/manual": "/manual"
-}
